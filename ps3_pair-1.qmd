@@ -1,6 +1,6 @@
 ---
 title: "30538 Problem Set 3: git pair"
-author: "Alberto Saldarriaga"
+author: "Evy Lanai and Alberto Saldarriaga"
 format: 
   pdf:
     keep-tex: true
@@ -28,6 +28,7 @@ data = pd.DataFrame(np.random.rand(100), columns=['Random Numbers'])
 
 def preview_data(df):
   head = df.head()
+  describe = df.describe()
   first_col = df.columns[0]
   hist_chart = alt.Chart(df).mark_bar().encode(
         alt.X(first_col, bin=True), 
@@ -38,8 +39,13 @@ def preview_data(df):
         height=300
     )
 
-  return [head, hist_chart]
+  return [head, describe, hist_chart]
 
-result = preview_data(data)
-result[1].show()
+preview_data(data)
+head, describe, hist_chart = result
+
+print(head)
+print(describe)
+hist_chart.display()
 ```
+
