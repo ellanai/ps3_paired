@@ -19,6 +19,7 @@ include-before-body:
 ---
 
 ```{python}
+import altair as alt
 import pandas as pd
 import numpy as np
 
@@ -26,14 +27,25 @@ np.random.seed(42)
 data = pd.DataFrame(np.random.rand(100), columns=['Random Numbers'])
 
 def preview_data(df):
-    head = df.head()
-    results = df.describe()
-    return [head, results]
+  head = df.head()
+  describe = df.describe()
+  first_col = df.columns[0]
+  hist_chart = alt.Chart(df).mark_bar().encode(
+        alt.X(first_col, bin=True), 
+        y='count()' 
+    ).properties(
+        title=f"Histogram of {first_col}",
+        width=400,
+        height=300
+    )
+
+  return [head, describe, hist_chart]
 
 preview_data(data)
+head, describe, hist_chart = result
+
+print(head)
+print(describe)
+hist_chart.display()
 ```
 
-
-
-
-Start a branch called describe. In ps3_pair.qmd, modify the function so that it returns a list where the first object is the material printed as the head and the second object is the results from running describe on the data frame. Push your branch to github remote.
